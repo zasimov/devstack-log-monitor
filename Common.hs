@@ -214,16 +214,16 @@ instance JSON LogEntry where
 
 ipAddress :: GenParser Char st (String,String,String,String)
 ipAddress = do
-  p1 <- two_or_one
+  p1 <- ip_address_part
   char '.'
-  p2 <- two_or_one
+  p2 <- ip_address_part
   char '.'
-  p3 <- two_or_one
+  p3 <- ip_address_part
   char '.'
-  p4 <- two_or_one
+  p4 <- ip_address_part
   return (p1, p2, p3, p4)
   where
-    two_or_one = try (count 2 digit) <|> count 1 digit
+    ip_address_part = try (count 3 digit) <|> try (count 2 digit) <|> count 1 digit
 
 
 apacheDate :: GenParser Char st UTCTime
